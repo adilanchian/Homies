@@ -293,6 +293,8 @@ PODS:
     - GoogleUtilities/UserDefaults (~> 6.6)
     - PromisesObjC (~> 1.2)
   - Flutter (1.0.0)
+  - fluttertoast (0.0.2):
+    - Flutter
   - GoogleAppMeasurement (6.5.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
@@ -363,6 +365,7 @@ DEPENDENCIES:
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_core_web (from `.symlinks/plugins/firebase_core_web/ios`)
   - Flutter (from `Flutter`)
+  - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
 
 SPEC REPOS:
   trunk:
@@ -403,6 +406,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_core_web/ios"
   Flutter:
     :path: Flutter
+  fluttertoast:
+    :path: ".symlinks/plugins/fluttertoast/ios"
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -423,6 +428,7 @@ SPEC CHECKSUMS:
   FirebaseFirestore: 35f8f67d7b25e4743c62ea6e46c38cafa8dc32b5
   FirebaseInstallations: 2119fb3e46b0a88bfdbf12562f855ee3252462fa
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  fluttertoast: b644586ef3b16f67fae9a1f8754cef6b2d6b634b
   GoogleAppMeasurement: 4c644d86835d827bab30ab6aabb9ecaf1f500735
   GoogleDataTransport: f6f8eba931df03ebd2232ff4645aa85f8f47b5ab
   GoogleDataTransportCCTSupport: d70a561f7d236af529fee598835caad5e25f6d3d
@@ -434,6 +440,6 @@ SPEC CHECKSUMS:
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
 
-PODFILE CHECKSUM: c34e2287a9ccaa606aeceab922830efb9a6ff69a
+PODFILE CHECKSUM: 2609452b760cd11039b14039a86564367a3d8ab9
 
 COCOAPODS: 1.9.1

@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:homies/models/item.dart';
 
 import '../styles.dart';
 
+// TheYagich01: "Man I love Flutter! - Alec"
 class HomiesListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -10,6 +12,13 @@ class HomiesListPage extends StatelessWidget {
       backgroundColor: Styles.baseBGColor,
       navigationBar: CupertinoNavigationBar(
         backgroundColor: CupertinoColors.darkBackgroundGray,
+        automaticallyImplyLeading: false,
+        leading: GestureDetector(
+            child: Text('Sign Out'),
+            onTap: () {
+              print('Signing out...');
+              FirebaseAuth.instance.signOut();
+            }),
         middle: Text(
           'Homies Home Items',
           style: Styles.detailTextStyle,

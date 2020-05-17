@@ -1,19 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:homies/widgets/homiesListPage.dart';
 import '../styles.dart';
 
 import 'homiesRegisterPage.dart';
+import 'homiesSignInPage.dart';
 
 // Will probably want to have a widget with a state
 class HomiesSignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      backgroundColor: Styles.baseBGColor,
-      child: SafeArea(
-        child: SignInContainer(),
-      ),
-    );
+        backgroundColor: Styles.baseBGColor,
+        child: new StreamBuilder(
+            stream: FirebaseAuth.instance.onAuthStateChanged,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return HomiesListPage();
+              }
+
+              return SafeArea(child: SignInContainer());
+            }));
   }
 }
 
@@ -75,7 +83,7 @@ class SignInActions extends StatelessWidget {
                 BorderSide(color: Styles.buttonEnabledOutlineColor, width: 2.0),
             highlightedBorderColor: Styles.buttonHighlightedOutlineColor,
             child: Text('Sign In', style: Styles.buttonTitleStyle),
-            onPressed: () => {print('SignIn')},
+            onPressed: () => {_pushSignIn(context)},
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
           ),
@@ -101,6 +109,18 @@ void _pushRegister(BuildContext context) {
             return Container(
                 color: Styles.baseBGColor,
                 child: SafeArea(child: HomiesRegisterPage()));
+          },
+          fullscreenDialog: true));
+}
+
+void _pushSignIn(BuildContext context) {
+  Navigator.push(
+      context,
+      MaterialPageRoute<Null>(
+          builder: (BuildContext context) {
+            return Container(
+                color: Styles.baseBGColor,
+                child: SafeArea(child: HomiesSignInPage()));
           },
           fullscreenDialog: true));
 }

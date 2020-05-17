@@ -1,15 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:homies/firestore/firestoreActions.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-import 'package:homies/models/user.dart';
-import 'package:homies/widgets/homiesListPage.dart';
 import '../styles.dart';
+import 'homiesListPage.dart';
 
-class HomiesRegisterPage extends StatelessWidget {
+class HomiesSignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -49,20 +48,15 @@ class RegisterDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Wrap(
-          children: <Widget>[
-            Text(
-              'Sign Up With Your Email',
-              style: Styles.headerTextStyle,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0, right: 15.0),
-              child: Text(
-                  'Just add your email and a super, secret password, and we will do the rest 🤓',
-                  style: Styles.detailTextStyle),
-            )
-          ],
+        Text(
+          'Sign In',
+          style: Styles.headerTextStyle,
         ),
+        Padding(
+          padding: const EdgeInsets.only(top: 5.0),
+          child: Text('Already a Homie? Sign In below!',
+              style: Styles.detailTextStyle),
+        )
       ],
     );
   }
@@ -75,14 +69,12 @@ class RegisterInputFormState extends State<RegisterInputForm> {
       new FirestoreActions(Firestore.instance);
   TextEditingController _emailTextController;
   TextEditingController _passwordTextController;
-  TextEditingController _usernameTextController;
 
   @override
   void initState() {
     super.initState();
     _emailTextController = TextEditingController();
     _passwordTextController = TextEditingController();
-    _usernameTextController = TextEditingController();
   }
 
   @override
@@ -92,20 +84,6 @@ class RegisterInputFormState extends State<RegisterInputForm> {
         child: Form(
             key: _formKey,
             child: Column(children: <Widget>[
-              CupertinoTextField(
-                controller: _usernameTextController,
-                placeholder: 'Username',
-                placeholderStyle: Styles.placeholderTextStyle,
-                cursorColor: Styles.inputBorderColor,
-                padding: const EdgeInsets.only(
-                    top: 6, right: 6, left: 10, bottom: 6),
-                style: Styles.textInputStyle,
-                decoration: BoxDecoration(
-                  border:
-                      Border.all(color: Styles.inputBorderColor, width: 2.0),
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-              ),
               Padding(
                   padding: const EdgeInsets.only(top: 15),
                   child: CupertinoTextField(
@@ -149,17 +127,16 @@ class RegisterInputFormState extends State<RegisterInputForm> {
                             width: 2.0),
                         highlightedBorderColor:
                             Styles.buttonHighlightedOutlineColor,
-                        child: Text('Create', style: Styles.buttonTitleStyle),
+                        child: Text('Sign In', style: Styles.buttonTitleStyle),
                         onPressed: () async {
-                          final shouldNavigate = await _onRegisterPressed(
+                          final canNavigate = await _onSignInPressed(
                             this._auth,
                             this._firestoreActions,
                             this._emailTextController,
                             this._passwordTextController,
-                            this._usernameTextController,
                           );
 
-                          if (shouldNavigate) {
+                          if (canNavigate) {
                             // Navigate away
                             Navigator.pop(context);
                             Navigator.push(context, MaterialPageRoute<Null>(
@@ -171,7 +148,7 @@ class RegisterInputFormState extends State<RegisterInputForm> {
                           } else {
                             Fluttertoast.showToast(
                                 msg:
-                                    "Hmm... Looks like something went wrong 😅. Please try again.",
+                                    "Looks like there was an issue with your email or password! 😐",
                                 timeInSecForIosWeb: 4,
                                 backgroundColor: Color(0xFF99E1D9),
                                 textColor: Color(0xFF000000),
@@ -193,44 +170,25 @@ class RegisterInputForm extends StatefulWidget {
 }
 
 // Helpers
-Future<bool> _onRegisterPressed(
-    FirebaseAuth auth,
-    FirestoreActions firestoreActions,
-    TextEditingController emailController,
-    TextEditingController passwordController,
-    TextEditingController usernameController) async {
+Future<bool> _onSignInPressed(
+  FirebaseAuth auth,
+  FirestoreActions firestoreActions,
+  TextEditingController emailController,
+  TextEditingController passwordController,
+) async {
   try {
-    final userData = await _registerNewUser(
-        auth, emailController.text, passwordController.text);
-
-    // Create user
-    final newUser =
-        User(userData.uid, emailController.text, usernameController.text);
+    await auth.signInWithEmailAndPassword(
+        email: emailController.text, password: passwordController.text);
 
     // Clear
-    // OnePocketPimp: Today Alec tried to clear the text before he used the text
     emailController.clear();
     passwordController.clear();
-    usernameController.clear();
-
-    // Write user to user collection
-    firestoreActions.createUser(newUser);
-
-    // TODO - Store in local storage at some point?
 
     return true;
+
+    // TODO - Store in local storage at some point?
   } catch (err) {
-    print('Registration Error: $err');
+    print('error $err');
     return false;
   }
-}
-
-Future<FirebaseUser> _registerNewUser(
-    FirebaseAuth auth, String email, String password) async {
-  final FirebaseUser user = (await auth.createUserWithEmailAndPassword(
-    email: email,
-    password: password,
-  ))
-      .user;
-  return user;
 }
