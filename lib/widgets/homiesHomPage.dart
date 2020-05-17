@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../styles.dart';
 
+import 'homiesRegisterPage.dart';
+
 // Will probably want to have a widget with a state
 class HomiesSignIn extends StatelessWidget {
   @override
@@ -73,7 +75,7 @@ class SignInActions extends StatelessWidget {
                 BorderSide(color: Styles.buttonEnabledOutlineColor, width: 2.0),
             highlightedBorderColor: Styles.buttonHighlightedOutlineColor,
             child: Text('Sign In', style: Styles.buttonTitleStyle),
-            onPressed: () => {print('GASP')},
+            onPressed: () => {_pushRegister(context)},
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
           ),
@@ -88,4 +90,15 @@ class SignInActions extends StatelessWidget {
       ],
     );
   }
+}
+
+// Helpers
+void _pushRegister(BuildContext context) {
+  Navigator.push(
+      context,
+      MaterialPageRoute<Null>(
+          builder: (BuildContext context) {
+            return HomiesRegisterPage();
+          },
+          fullscreenDialog: true));
 }
