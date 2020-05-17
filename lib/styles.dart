@@ -28,6 +28,21 @@ abstract class Styles {
   static const TextStyle textInputStyle = TextStyle(
       color: baseTextColor, fontSize: 16, fontWeight: FontWeight.normal);
 
+  static const TextStyle itemNameTextStyle = TextStyle(
+      color: baseTextColor, fontSize: 16, fontWeight: FontWeight.bold);
+
+  static const TextStyle itemDetailTextStyle = TextStyle(
+    color: baseTextColor,
+    fontSize: 12,
+    fontWeight: FontWeight.normal,
+  );
+
+  static const TextStyle itemRequestedByTextStyle = TextStyle(
+      color: baseTextColor,
+      fontSize: 12,
+      fontWeight: FontWeight.normal,
+      fontStyle: FontStyle.italic);
+
   // Base Colors
   static const Color baseBGColor = Color(0xFF374B4A);
 
@@ -46,4 +61,7 @@ abstract class Styles {
 
   // Input Colors
   static const Color inputBorderColor = Color(0xFF99E1D9);
+
+  // List Item Color
+  static const Color listItemBGColor = Color(0xFF5E6A64);
 }

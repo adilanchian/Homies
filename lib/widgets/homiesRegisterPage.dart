@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:homies/firestore/firestoreActions.dart';
 
 import 'package:homies/models/user.dart';
+import 'package:homies/widgets/homiesListPage.dart';
 import '../styles.dart';
 
 class HomiesRegisterPage extends StatelessWidget {
@@ -149,14 +150,23 @@ class RegisterInputFormState extends State<RegisterInputForm> {
                         highlightedBorderColor:
                             Styles.buttonHighlightedOutlineColor,
                         child: Text('Create', style: Styles.buttonTitleStyle),
-                        onPressed: () => {
+                        onPressed: () {
                           _onRegisterPressed(
                             this._auth,
                             this._firestoreActions,
                             this._emailTextController,
                             this._passwordTextController,
                             this._usernameTextController,
-                          )
+                          );
+
+                          // Navigate away
+                          Navigator.pop(context);
+                          Navigator.push(context, MaterialPageRoute<Null>(
+                              builder: (BuildContext context) {
+                            return Container(
+                                color: Styles.baseBGColor,
+                                child: HomiesListPage());
+                          }));
                         },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0)),
@@ -196,8 +206,7 @@ void _onRegisterPressed(
     // Write user to user collection
     firestoreActions.createUser(newUser);
 
-    // Store user in local state
-
+    // TODO - Store in local storage at some point?
   } catch (err) {
     print(err);
   }
