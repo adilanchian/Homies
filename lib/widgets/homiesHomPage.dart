@@ -16,10 +16,13 @@ class HomiesSignIn extends StatelessWidget {
         child: new StreamBuilder(
             stream: FirebaseAuth.instance.onAuthStateChanged,
             builder: (context, snapshot) {
+              print('Im here');
               if (snapshot.hasData) {
+                print('FirebaseData: $snapshot.data');
                 return HomiesListPage();
               }
 
+              print('Im here?');
               return SafeArea(child: SignInContainer());
             }));
   }

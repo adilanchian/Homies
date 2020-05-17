@@ -162,12 +162,6 @@ class RegisterInputFormState extends State<RegisterInputForm> {
                           if (shouldNavigate) {
                             // Navigate away
                             Navigator.pop(context);
-                            Navigator.push(context, MaterialPageRoute<Null>(
-                                builder: (BuildContext context) {
-                              return Container(
-                                  color: Styles.baseBGColor,
-                                  child: HomiesListPage());
-                            }));
                           } else {
                             Fluttertoast.showToast(
                                 msg:
