@@ -6,7 +6,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:homies/firestore/firestoreActions.dart';
 
 import 'package:homies/models/user.dart';
-import 'package:homies/widgets/homiesListPage.dart';
 import '../styles.dart';
 
 class HomiesRegisterPage extends StatelessWidget {

@@ -14,7 +14,13 @@ class HomiesListPage extends StatelessWidget {
         backgroundColor: CupertinoColors.darkBackgroundGray,
         automaticallyImplyLeading: false,
         leading: GestureDetector(
-            child: Text('Sign Out'),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Text(
+                'Sign Out',
+                style: Styles.subtitleTextStyle,
+              ),
+            ),
             onTap: () {
               print('Signing out...');
               FirebaseAuth.instance.signOut();
