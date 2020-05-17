@@ -75,7 +75,7 @@ class SignInActions extends StatelessWidget {
                 BorderSide(color: Styles.buttonEnabledOutlineColor, width: 2.0),
             highlightedBorderColor: Styles.buttonHighlightedOutlineColor,
             child: Text('Sign In', style: Styles.buttonTitleStyle),
-            onPressed: () => {_pushRegister(context)},
+            onPressed: () => {print('SignIn')},
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
           ),
@@ -86,7 +86,7 @@ class SignInActions extends StatelessWidget {
         FlatButton(
             child:
                 Text('Get Started With Homies', style: Styles.actionTextStyle),
-            onPressed: () => {print("HALLO")})
+            onPressed: () => {_pushRegister(context)})
       ],
     );
   }
@@ -98,7 +98,9 @@ void _pushRegister(BuildContext context) {
       context,
       MaterialPageRoute<Null>(
           builder: (BuildContext context) {
-            return HomiesRegisterPage();
+            return Container(
+                color: Styles.baseBGColor,
+                child: SafeArea(child: HomiesRegisterPage()));
           },
           fullscreenDialog: true));
 }
